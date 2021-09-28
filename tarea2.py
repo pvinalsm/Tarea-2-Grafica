@@ -16,7 +16,7 @@ import grafica.lighting_shaders as ls
 import grafica.performance_monitor as pm
 from grafica.assets_path import getAssetPath
 
-__author__ = "Ivan Sipiran"
+__author__ = "Patricio A. Viñals M."
 __license__ = "MIT"
 
 # A class to store the application control
