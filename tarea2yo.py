@@ -127,16 +127,16 @@ def createGPUShape(pipeline, shape):
 #NOTA: Aqui creas tu escena. En escencia, sólo tendrías que modificar esta función.
 def createAvion(pipeline):
     cuerpoNode = sg.SceneGraphNode('cuerpo')
-    principal_cuerpo_gpu = createGPUShape(pipeline, bs.createColorCylinderTarea2(0.7, 0.7, 0.7))
-    cuerpoNode.transform = tr.matmul([tr.translate(0, 0, 0),
-                                    tr.scale(3, 0.7, 0.7),
+    principal_cuerpo_gpu = createGPUShape(pipeline, bs.createColorCylinderTarea2(0, 0.6, 0))
+    cuerpoNode.transform = tr.matmul([tr.translate(-0.7, 0, 0),
+                                    tr.scale(3.3, 0.7, 0.7),
                                     tr.rotationZ(np.pi/2)
                                     ])
     cuerpoNode.childs += [principal_cuerpo_gpu]
 
     cabinaNode = sg.SceneGraphNode('cabina')
-    principal_cabina_gpu = createGPUShape(pipeline, bs.createColorCylinderTarea2(0.2, 0.2, 0.2))
-    cabinaNode.transform = tr.matmul([tr.translate(0, 0.83, 0), 
+    principal_cabina_gpu = createGPUShape(pipeline, bs.createColorCylinderTarea2(1, 1, 1))
+    cabinaNode.transform = tr.matmul([tr.translate(0.15, 0.83, 0), 
                             tr.rotationZ(1.9),
                             tr.scale(0.3, 0.01, 0.3)
                             ])
@@ -144,34 +144,140 @@ def createAvion(pipeline):
 
     principalNode = sg.SceneGraphNode('principal')
     principalNode.transform = tr.identity()
-    principalNode.childs += [
-        cuerpoNode,
-        cabinaNode
-    ]
+    principalNode.childs += [cuerpoNode,
+                            cabinaNode]
+
+
 
     alaSupNode = sg.SceneGraphNode('alaSup')
+    ala_sup_gpu = createGPUShape(pipeline, bs.createColorCubeTarea2(0, 0.6, 0))
+    alaSupNode.transform = tr.matmul([tr.translate(0, 1.6, 0),
+                                    tr.scale(0.8, 0.1, 3.8)])
+    alaSupNode.childs += [ala_sup_gpu]
+
     alaInfNode = sg.SceneGraphNode('alaInf')
+    ala_inf_gpu = createGPUShape(pipeline, bs.createColorCubeTarea2(0, 0.6, 0))
+    alaInfNode.transform = tr.matmul([tr.translate(0, -0.68, 0),
+                                    tr.scale(0.8, 0.1, 3.8)])
+    alaInfNode.childs += [ala_inf_gpu]
+
+    uniones = createGPUShape(pipeline, bs.createColorCylinderTarea2(0.8, 0.4, 0.0))
+
+    uniones1Node = sg.SceneGraphNode('uniones1')
+    uniones1Node.transform = tr.matmul([tr.translate(0.5, 0.44, 2.8),                              
+                                        tr.scale(0.03, 1.2, 0.03)])
+    uniones1Node.childs += [uniones]
+
+    uniones2Node = sg.SceneGraphNode('uniones2')
+    uniones2Node.transform = tr.matmul([tr.translate(-0.5, 0.44, 2.8),                              
+                                        tr.scale(0.03, 1.2, 0.03)])
+    uniones2Node.childs += [uniones]
+
+    uniones3Node = sg.SceneGraphNode('uniones3')
+    uniones3Node.transform = tr.matmul([tr.translate(0.5, 0.44, -2.8),                              
+                                        tr.scale(0.03, 1.2, 0.03)])
+    uniones3Node.childs += [uniones]
+
+    uniones4Node = sg.SceneGraphNode('uniones4')
+    uniones4Node.transform = tr.matmul([tr.translate(-0.5, 0.44, -2.8),                              
+                                        tr.scale(0.03, 1.2, 0.03)])
+    uniones4Node.childs += [uniones]
+
+    uniones5Node = sg.SceneGraphNode('uniones5')
+    uniones5Node.transform = tr.matmul([tr.translate(0.5, 0.5, -0.8),
+                                        tr.rotationX(3*np.pi/4),                         
+                                        tr.scale(0.03, 1.5, 0.03)])
+    uniones5Node.childs += [uniones]
+
+    uniones6Node = sg.SceneGraphNode('uniones6')
+    uniones6Node.transform = tr.matmul([tr.translate(-0.5, 0.5, -0.8),
+                                        tr.rotationX(3*np.pi/4),                         
+                                        tr.scale(0.03, 1.5, 0.03)])
+    uniones6Node.childs += [uniones]
+
+    uniones7Node = sg.SceneGraphNode('uniones7')
+    uniones7Node.transform = tr.matmul([tr.translate(0.5, 0.5, 0.8),
+                                        tr.rotationX(np.pi/4),                         
+                                        tr.scale(0.03, 1.5, 0.03)])
+    uniones7Node.childs += [uniones]
+
+    uniones8Node = sg.SceneGraphNode('uniones8')
+    uniones8Node.transform = tr.matmul([tr.translate(-0.5, 0.5, 0.8),
+                                        tr.rotationX(np.pi/4),                         
+                                        tr.scale(0.03, 1.5, 0.03)])
+    uniones8Node.childs += [uniones]
+    
     unionesNode = sg.SceneGraphNode('uniones')
+    unionesNode.transform = tr.identity()
+    unionesNode.childs += [uniones1Node,
+                            uniones2Node,
+                            uniones3Node,
+                            uniones4Node,
+                            uniones5Node,
+                            uniones6Node,
+                            uniones7Node,
+                            uniones8Node]
 
     alasNode = sg.SceneGraphNode('alas')
-    alasNode.transform = tr.identity()
-    alasNode.childs += [
-        alaSupNode,
-        alaInfNode,
-        unionesNode
-    ]
+    alasNode.transform = tr.matmul([tr.translate(0.8, 0, 0)])
+    alasNode.childs += [alaSupNode,
+                        alaInfNode,
+                        unionesNode]
+
+
+
+    blackCylinder = createGPUShape(pipeline, bs.createColorCylinderTarea2(0, 0, 0))
+
+    wheel1Node = sg.SceneGraphNode('wheel1')
+    wheel1Node.transform = tr.matmul([tr.translate(0, 0, 1),
+                                        tr.rotationX(np.pi/2),                         
+                                        tr.scale(0.55, 0.1, 0.55)])
+    wheel1Node.childs += [blackCylinder]
+
+    wheel2Node = sg.SceneGraphNode('wheel2')
+    wheel2Node.transform = tr.matmul([tr.translate(0, 0, -1),
+                                        tr.rotationX(np.pi/2),                         
+                                        tr.scale(0.55, 0.1, 0.55)])
+    wheel2Node.childs += [blackCylinder]
+
+    unionNode = sg.SceneGraphNode('union')
+    ruedas_wheels_union_gpu = createGPUShape(pipeline, bs.createColorCylinderTarea2(1, 1, 1))
+    unionNode.transform = tr.matmul([tr.translate(0, 0, 0),
+                                        tr.rotationX(np.pi/2),                         
+                                        tr.scale(0.1, 0.8, 0.1)])
+    unionNode.childs += [ruedas_wheels_union_gpu]
 
     wheelsNode = sg.SceneGraphNode('wheels')
-    unionNode = sg.SceneGraphNode('union')
+    wheelsNode.transform = tr.identity()
+    wheelsNode.childs += [wheel1Node,
+                        wheel2Node,
+                        unionNode]
+
+    orangeTriangle = createGPUShape(pipeline, bs.createColorConeTarea2(0.8, 0.4, 0))
+
+    patas1Node = sg.SceneGraphNode('patas1')
+    patas1Node.transform = tr.matmul([tr.translate(0, 0, -0.9),
+                                        tr.rotationX(np.pi),                         
+                                        tr.scale(0.45, 0.45, 0.01)])
+    patas1Node.childs += [orangeTriangle]
+
+    patas2Node = sg.SceneGraphNode('patas1')
+    patas2Node.transform = tr.matmul([tr.translate(0, 0, 0.9),
+                                        tr.rotationX(np.pi),                         
+                                        tr.scale(0.45, 0.45, 0.01)])
+    patas2Node.childs += [orangeTriangle]
+
     patasNode = sg.SceneGraphNode('patas')
+    patasNode.transform = tr.matmul([tr.translate(0, 0.5, 0)])
+    patasNode.childs += [patas1Node,
+                            patas2Node]
 
     ruedasNode = sg.SceneGraphNode('ruedas')
-    ruedasNode.transform = tr.identity()
-    ruedasNode.childs += [
-        wheelsNode,
-        unionNode,
-        patasNode
-    ]
+    ruedasNode.transform = tr.matmul([tr.translate(1, -1.74, 0)])
+    ruedasNode.childs += [wheelsNode,
+                            patasNode]
+
+
 
     tapaNode = sg.SceneGraphNode('tapa')
     llantaNode = sg.SceneGraphNode('llanta')
