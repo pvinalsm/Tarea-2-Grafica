@@ -158,11 +158,82 @@ def createAvion(pipeline):
 
 
 
-    alaSupNode = sg.SceneGraphNode('alaSup')
-    ala_sup_gpu = createGPUShape(pipeline, bs.createColorCubeTarea2(0, 0.6, 0))
-    alaSupNode.transform = tr.matmul([tr.translate(0, 1.6, 0),
+    whiteCylinder = createGPUShape(pipeline, bs.createColorCylinderTarea2(1, 1, 1))
+    blueCylinder = createGPUShape(pipeline, bs.createColorCylinderTarea2(0, 0, 1))
+    red0Cylinder = createGPUShape(pipeline, bs.createColorCylinderTarea2(1, 0, 0))
+
+    circulo1aNode = sg.SceneGraphNode('circulo1a')
+    circulo1aNode.transform = tr.matmul([tr.translate(0, 0, 0),                     
+                                        tr.scale(1, 0.01, 1)])
+    circulo1aNode.childs += [whiteCylinder]
+
+    circulo2aNode = sg.SceneGraphNode('circulo2a')
+    circulo2aNode.transform = tr.matmul([tr.translate(0, 0.01, 0),                        
+                                        tr.scale(0.8, 0.01, 0.8)])
+    circulo2aNode.childs += [blueCylinder]
+
+    circulo3aNode = sg.SceneGraphNode('circulo3a')
+    circulo3aNode.transform = tr.matmul([tr.translate(0, 0.02, 0),                        
+                                        tr.scale(0.5, 0.01, 0.5)])
+    circulo3aNode.childs += [whiteCylinder]
+
+    circulo4aNode = sg.SceneGraphNode('circulo4a')
+    circulo4aNode.transform = tr.matmul([tr.translate(0, 0.03, 0),                        
+                                        tr.scale(0.2, 0.01, 0.2)])
+    circulo4aNode.childs += [red0Cylinder]
+
+
+    circulo1bNode = sg.SceneGraphNode('circulo1b')
+    circulo1bNode.transform = tr.matmul([tr.translate(0, 0, 0),                       
+                                        tr.scale(1, 0.01, 1)])
+    circulo1bNode.childs += [whiteCylinder]
+
+    circulo2bNode = sg.SceneGraphNode('circulo2b')
+    circulo2bNode.transform = tr.matmul([tr.translate(0, 0.01, 0),                        
+                                        tr.scale(0.8, 0.01, 0.8)])
+    circulo2bNode.childs += [blueCylinder]
+
+    circulo3bNode = sg.SceneGraphNode('circulo3b')
+    circulo3bNode.transform = tr.matmul([tr.translate(0, 0.02, 0),                        
+                                        tr.scale(0.5, 0.01, 0.5)])
+    circulo3bNode.childs += [whiteCylinder]
+
+    circulo4bNode = sg.SceneGraphNode('circulo4b')
+    circulo4bNode.transform = tr.matmul([tr.translate(0, 0.03, 0),                        
+                                        tr.scale(0.2, 0.01, 0.2)])
+    circulo4bNode.childs += [red0Cylinder]
+
+    circuloaNode = sg.SceneGraphNode('circuloa')
+    circuloaNode.transform = tr.matmul([tr.translate(0, 3, 2.8),
+                                        tr.uniformScale(0.6)])
+    circuloaNode.childs += [circulo1aNode,
+                            circulo2aNode,
+                            circulo3aNode,
+                            circulo4aNode]
+
+    circulobNode = sg.SceneGraphNode('circulob')
+    circulobNode.transform = tr.matmul([tr.translate(0, 3, -2.8),
+                                        tr.uniformScale(0.6)])
+    circulobNode.childs += [circulo1bNode,
+                            circulo2bNode,
+                            circulo3bNode,
+                            circulo4bNode]
+
+    circulosNode = sg.SceneGraphNode('circulos')
+    circulosNode.transform = tr.matmul([tr.translate(0, -1.3, 0)])
+    circulosNode.childs += [circuloaNode,
+                            circulobNode]
+
+    alaNode = sg.SceneGraphNode('ala')
+    alas_ala_gpu = createGPUShape(pipeline, bs.createColorCubeTarea2(0, 0.6, 0))
+    alaNode.transform = tr.matmul([tr.translate(0, 1.6, 0),
                                     tr.scale(0.8, 0.1, 3.8)])
-    alaSupNode.childs += [ala_sup_gpu]
+    alaNode.childs += [alas_ala_gpu]
+
+    alaSupNode = sg.SceneGraphNode('alaSup')
+    alaSupNode.transform = tr.identity()
+    alaSupNode.childs += [alaNode,
+                        circulosNode]
 
     alaInfNode = sg.SceneGraphNode('alaInf')
     ala_inf_gpu = createGPUShape(pipeline, bs.createColorCubeTarea2(0, 0.6, 0))
