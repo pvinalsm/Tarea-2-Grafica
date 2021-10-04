@@ -124,8 +124,10 @@ def createGPUShape(pipeline, shape):
 
     return gpuShape
 
-#NOTA: Aqui creas tu escena. En escencia, sólo tendrías que modificar esta función.
+#Creación de escena
 def createAvion(pipeline):
+
+    #creación nodo del cuerpo principal
     cuerpoNode = sg.SceneGraphNode('cuerpo')
     principal_cuerpo_gpu = createGPUShape(pipeline, bs.createColorCylinderTarea2(0, 0.6, 0))
     cuerpoNode.transform = tr.matmul([tr.translate(0.1, 0, 0),
@@ -158,6 +160,7 @@ def createAvion(pipeline):
 
 
 
+    #creación nodo de alas
     whiteCylinder = createGPUShape(pipeline, bs.createColorCylinderTarea2(1, 1, 1))
     blueCylinder = createGPUShape(pipeline, bs.createColorCylinderTarea2(0, 0, 1))
     red0Cylinder = createGPUShape(pipeline, bs.createColorCylinderTarea2(1, 0, 0))
@@ -181,7 +184,6 @@ def createAvion(pipeline):
     circulo4aNode.transform = tr.matmul([tr.translate(0, 0.03, 0),                        
                                         tr.scale(0.2, 0.01, 0.2)])
     circulo4aNode.childs += [red0Cylinder]
-
 
     circulo1bNode = sg.SceneGraphNode('circulo1b')
     circulo1bNode.transform = tr.matmul([tr.translate(0, 0, 0),                       
@@ -306,6 +308,7 @@ def createAvion(pipeline):
 
 
 
+    #creación nodo de ruedas
     blackCylinder = createGPUShape(pipeline, bs.createColorCylinderTarea2(0, 0, 0))
 
     wheel1Node = sg.SceneGraphNode('wheel1')
@@ -359,6 +362,7 @@ def createAvion(pipeline):
 
 
 
+    #creación nodo de hélice
     redCylinder = createGPUShape(pipeline, bs.createColorCylinderTarea2(1, 0, 0))
 
     tapaNode = sg.SceneGraphNode('tapa')
@@ -411,6 +415,7 @@ def createAvion(pipeline):
 
 
 
+    #creación nodo de timones traseros
     greenTriangle = createGPUShape(pipeline, bs.createColorConeTarea2(0, 0.6, 0))
 
     timonSupNode = sg.SceneGraphNode('timonSup')
@@ -449,6 +454,9 @@ def createAvion(pipeline):
                             timonDerNode,
                             timonIzqNode]
 
+
+
+    #se crea el nodo padre avion, que tiene de hijos a los 5 documentados
     avion = sg.SceneGraphNode('system')
     avion.transform = tr.identity()
     avion.childs += [principalNode,
@@ -499,7 +507,7 @@ if __name__ == "__main__":
     mvpPipeline.setupVAO(gpuAxis)
     gpuAxis.fillBuffers(cpuAxis.vertices, cpuAxis.indices, GL_STATIC_DRAW)
 
-    #NOTA: Aqui creas un objeto con tu escena
+    #Creción de objeto con la escena
     dibujo = createAvion(pipeline)
 
     setPlot(pipeline, mvpPipeline)
