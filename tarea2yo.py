@@ -128,11 +128,19 @@ def createGPUShape(pipeline, shape):
 def createAvion(pipeline):
     cuerpoNode = sg.SceneGraphNode('cuerpo')
     principal_cuerpo_gpu = createGPUShape(pipeline, bs.createColorCylinderTarea2(0, 0.6, 0))
-    cuerpoNode.transform = tr.matmul([tr.translate(-0.7, 0, 0),
-                                    tr.scale(3.3, 0.7, 0.7),
+    cuerpoNode.transform = tr.matmul([tr.translate(0.1, 0, 0),
+                                    tr.scale(2.5, 0.7, 0.7),
                                     tr.rotationZ(np.pi/2)
                                     ])
     cuerpoNode.childs += [principal_cuerpo_gpu]
+
+    backNode = sg.SceneGraphNode('cuerpo')
+    principal_back_gpu = createGPUShape(pipeline, bs.createColorConeTarea2(0, 0.6, 0))
+    backNode.transform = tr.matmul([tr.translate(-3.6, 0, 0),
+                                    tr.scale(1.2, 0.7, 0.7),
+                                    tr.rotationZ(np.pi/2)
+                                    ])
+    backNode.childs += [principal_back_gpu]
 
     cabinaNode = sg.SceneGraphNode('cabina')
     principal_cabina_gpu = createGPUShape(pipeline, bs.createColorCylinderTarea2(1, 1, 1))
@@ -145,6 +153,7 @@ def createAvion(pipeline):
     principalNode = sg.SceneGraphNode('principal')
     principalNode.transform = tr.identity()
     principalNode.childs += [cuerpoNode,
+                            backNode,
                             cabinaNode]
 
 
@@ -302,21 +311,19 @@ def createAvion(pipeline):
                                     tr.scale(0.08, 0.01, 0.08)])
     postTuboNode.childs += [helice_postTubo_gpu]
 
-    redTriangle = createGPUShape(pipeline, bs.createColorConeTarea2(1, 0, 0))
-
     helix1Node = sg.SceneGraphNode('helix1Node')
     helix1Node.transform = tr.matmul([tr.translate(0.15, 0, -0.5),
                                     tr.rotationY(3*np.pi/2),
                                     tr.rotationZ(np.pi/2),                     
                                     tr.scale(0.06, 0.6, 0.01)])
-    helix1Node.childs += [redTriangle]
+    helix1Node.childs += [orangeTriangle]
 
     helix2Node = sg.SceneGraphNode('helix2Node')
     helix2Node.transform = tr.matmul([tr.translate(0.15, 0, 0.5),
                                     tr.rotationY(np.pi/2),
                                     tr.rotationZ(np.pi/2),                     
                                     tr.scale(0.06, 0.6, 0.01)])
-    helix2Node.childs += [redTriangle]
+    helix2Node.childs += [orangeTriangle]
 
     helixNode = sg.SceneGraphNode('helix')
     helixNode.transform = tr.matmul([tr.translate(0.17, 0, 0)])
@@ -333,13 +340,39 @@ def createAvion(pipeline):
 
 
 
+    greenTriangle = createGPUShape(pipeline, bs.createColorConeTarea2(0, 0.6, 0))
+
     timonSupNode = sg.SceneGraphNode('timonSup')
+    timones_timonSup_gpu = createGPUShape(pipeline, bs.createColorConeTarea2(1, 1, 1))
+    timonSupNode.transform = tr.matmul([tr.translate(0, 0.7, 0),
+                                        tr.scale(0.7, 0.6, 0.01)])   
+    timonSupNode.childs += [timones_timonSup_gpu]
+
     timonInfNode = sg.SceneGraphNode('timonInf')
+    timones_timonInf_gpu = createGPUShape(pipeline, bs.createColorConeTarea2(1, 1, 0))
+    timonInfNode.transform = tr.matmul([tr.translate(-0.3, -0.3, 0),  
+                                        tr.rotationX(np.pi),            
+                                        tr.scale(0.4, 0.3, 0.01)])
+    timonInfNode.childs += [timones_timonInf_gpu]
+
     timonDerNode = sg.SceneGraphNode('timonDer')
+    timonDerNode.transform = tr.matmul([tr.translate(0, 0, 0.7),
+                                    tr.rotationZ(np.pi/2),
+                                    tr.rotationY(np.pi/2),
+                                    tr.rotationZ(np.pi/2),                     
+                                    tr.scale(0.7, 0.8, 0.01)])
+    timonDerNode.childs += [greenTriangle]
+
     timonIzqNode = sg.SceneGraphNode('timonIzq')
+    timonIzqNode.transform = tr.matmul([tr.translate(0, 0, -0.7),
+                                    tr.rotationZ(np.pi/2),
+                                    tr.rotationY(3*np.pi/2),
+                                    tr.rotationZ(np.pi/2),                     
+                                    tr.scale(0.7, 0.8, 0.01)])
+    timonIzqNode.childs += [greenTriangle]
 
     timonesNode = sg.SceneGraphNode('timones')
-    timonesNode.transform = tr.identity()
+    timonesNode.transform = tr.matmul([tr.translate(-3.7, 0, 0)])
     timonesNode.childs += [timonSupNode,
                             timonInfNode,
                             timonDerNode,
