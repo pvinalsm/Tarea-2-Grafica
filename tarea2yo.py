@@ -279,19 +279,59 @@ def createAvion(pipeline):
 
 
 
+    redCylinder = createGPUShape(pipeline, bs.createColorCylinderTarea2(1, 0, 0))
+
     tapaNode = sg.SceneGraphNode('tapa')
+    tapaNode.transform = tr.matmul([tr.translate(0, 0, 0),
+                                        tr.rotationZ(np.pi/2),                     
+                                        tr.scale(0.55, 0.01, 0.55)])
+    tapaNode.childs += [redCylinder]
+
     llantaNode = sg.SceneGraphNode('llanta')
+
     tuboNode = sg.SceneGraphNode('tubo')
+    tuboNode.transform = tr.matmul([tr.translate(0.15, 0, 0),
+                                    tr.rotationZ(np.pi/2),                     
+                                    tr.scale(0.08, 0.15, 0.08)])
+    tuboNode.childs += [redCylinder]
+
+    postTuboNode = sg.SceneGraphNode('postTubo')
+    helice_postTubo_gpu = createGPUShape(pipeline, bs.createColorCylinderTarea2(1, 1, 1))
+    postTuboNode.transform = tr.matmul([tr.translate(0.3, 0, 0),
+                                    tr.rotationZ(np.pi/2),                     
+                                    tr.scale(0.08, 0.01, 0.08)])
+    postTuboNode.childs += [helice_postTubo_gpu]
+
+    redTriangle = createGPUShape(pipeline, bs.createColorConeTarea2(1, 0, 0))
+
+    helix1Node = sg.SceneGraphNode('helix1Node')
+    helix1Node.transform = tr.matmul([tr.translate(0.15, 0, -0.5),
+                                    tr.rotationY(3*np.pi/2),
+                                    tr.rotationZ(np.pi/2),                     
+                                    tr.scale(0.06, 0.6, 0.01)])
+    helix1Node.childs += [redTriangle]
+
+    helix2Node = sg.SceneGraphNode('helix2Node')
+    helix2Node.transform = tr.matmul([tr.translate(0.15, 0, 0.5),
+                                    tr.rotationY(np.pi/2),
+                                    tr.rotationZ(np.pi/2),                     
+                                    tr.scale(0.06, 0.6, 0.01)])
+    helix2Node.childs += [redTriangle]
+
     helixNode = sg.SceneGraphNode('helix')
+    helixNode.transform = tr.matmul([tr.translate(0.17, 0, 0)])
+    helixNode.childs += [helix1Node, 
+                        helix2Node]
 
     heliceNode = sg.SceneGraphNode('helice')
-    heliceNode.transform = tr.identity()
-    heliceNode.childs += [
-        tapaNode,
-        llantaNode,
-        tuboNode,
-        helixNode
-    ]
+    heliceNode.transform = tr.matmul([tr.translate(2.6, 0, 0)])
+    heliceNode.childs += [tapaNode,
+                        llantaNode,
+                        tuboNode,
+                        postTuboNode,
+                        helixNode]
+
+
 
     timonSupNode = sg.SceneGraphNode('timonSup')
     timonInfNode = sg.SceneGraphNode('timonInf')
@@ -300,21 +340,18 @@ def createAvion(pipeline):
 
     timonesNode = sg.SceneGraphNode('timones')
     timonesNode.transform = tr.identity()
-    timonesNode.childs += [
-        timonSupNode,
-        timonInfNode,
-        timonDerNode,
-        timonIzqNode
-    ]
+    timonesNode.childs += [timonSupNode,
+                            timonInfNode,
+                            timonDerNode,
+                            timonIzqNode]
 
     avion = sg.SceneGraphNode('system')
     avion.transform = tr.identity()
     avion.childs += [principalNode,
-        alasNode,
-        ruedasNode,
-        heliceNode,
-        timonesNode
-    ]
+                    alasNode,
+                    ruedasNode,
+                    heliceNode,
+                    timonesNode]
     
     return avion
 
